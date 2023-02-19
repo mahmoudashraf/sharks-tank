@@ -1,4 +1,4 @@
-app = "my-remix-app-f90a"
+app = "sharks-tank-staging"
 kill_signal = "SIGINT"
 kill_timeout = 5
 processes = [ ]
