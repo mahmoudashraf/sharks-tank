@@ -3,25 +3,20 @@ import { json, redirect } from "@remix-run/node";
 import { Form, useCatch, useLoaderData } from "@remix-run/react";
 import invariant from "tiny-invariant";
 
-import { deleteNote, getNote } from "~/models/note.server";
 import { getUser } from "~/fb.sessions.server";
 
 export async function loader({ request, params }: LoaderArgs) {
-  const userId = await getUser(request);
+  //const userId = await getUser(request);
   invariant(params.noteId, "noteId not found");
 
-  const note = await getNote({ userId, id: params.noteId });
-  if (!note) {
-    throw new Response("Not Found", { status: 404 });
-  }
-  return json({ note });
+  return json({  });
 }
 
 export async function action({ request, params }: ActionArgs) {
   const userId = await getUser(request);
   invariant(params.noteId, "noteId not found");
 
-  await deleteNote({ userId, id: params.noteId });
+  //await deleteNote({ userId, id: params.noteId });
 
   return redirect("/notes");
 }
@@ -31,8 +26,6 @@ export default function NoteDetailsPage() {
 
   return (
     <div>
-      <h3 className="text-2xl font-bold">{data.note.title}</h3>
-      <p className="py-6">{data.note.body}</p>
       <hr className="my-4" />
       <Form method="post">
         <button

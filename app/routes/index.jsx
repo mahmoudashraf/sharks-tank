@@ -17,7 +17,7 @@ export async function loader({ request }) {
   );
 
   const { documents } = await response.json();
-
+/*
   console.log("documents", JSON.stringify(documents));
   const responseData = [];
   documents.forEach((doc) => {
@@ -36,7 +36,8 @@ export async function loader({ request }) {
     decodedClaims,
     responseData,
   };
-  return json(data);
+  */
+  return json({});
 }
 
 export async function action({ request }) {
