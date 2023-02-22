@@ -8,11 +8,12 @@ import { installGlobals } from "@remix-run/node";
 import { parse } from "cookie";
 
 import { createUser } from "~/models/user.server";
-import { createUserSession } from "~/session.server";
+import { sessionLogin } from "~/fb.sessions.server"
+
 
 installGlobals();
 
-async function createAndLogin(email: string) {
+async function createAndLogin(email: string) {/*
   if (!email) {
     throw new Error("email required for login");
   }
@@ -22,7 +23,7 @@ async function createAndLogin(email: string) {
 
   const user = await createUser(email, "myreallystrongpassword");
 
-  const response = await createUserSession({
+  const response = await sessionLogin(...{
     request: new Request("test://test"),
     userId: user.id,
     remember: false,
@@ -43,6 +44,7 @@ async function createAndLogin(email: string) {
 </cookie>
   `.trim()
   );
+  */
 }
 
 createAndLogin(process.argv[2]);
