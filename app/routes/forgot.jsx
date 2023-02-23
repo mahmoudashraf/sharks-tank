@@ -3,7 +3,6 @@ import { sendPasswordResetEmail } from "firebase/auth";
 import { Form, Link } from "@remix-run/react";
 import { redirect } from "@remix-run/node";
 
-//create a stylesheet ref for the auth.css file
 export let links = () => {
   return [];
 };
@@ -33,19 +32,14 @@ export default function Login() {
         <p>Enter the email address associated with your account</p>
         <div className="field">
           <label htmlFor="email">Email</label>
-          <input
-            type="email"
-            name="email"
-            placeholder="me@mail.com"
-            required
-          />
+          <input type="email" name="email" placeholder="me@mail.com" required />
         </div>
         <button className="ui button" type="submit">
           Request Password Reset Link
         </button>
       </Form>
       <div className="ui divider"></div>
-      <div className="ui centered grid" style={{paddingTop:16}}>
+      <div className="ui centered grid" style={{ paddingTop: 16 }}>
         <div className="ui button">
           <Link to="/register">Not Yet Registered?</Link>
         </div>

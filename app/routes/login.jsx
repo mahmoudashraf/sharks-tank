@@ -15,7 +15,6 @@ import {
 import { useRef } from "react";
 import { sessionLogin } from "../fb.sessions.server";
 
-//create a stylesheet ref for the auth.css file
 export let links = () => {
   return [];
 };
@@ -35,7 +34,7 @@ export function ErrorBoundary({ error }) {
 
 export function CatchBoundary() {
   const caught = useCatch();
-debugger;
+  debugger;
   return (
     <div>
       <h1>Caught</h1>
@@ -47,16 +46,12 @@ debugger;
   );
 }
 
-// use loader to check for existing session, if found, send the user to the blogs site
-export async function loader({ request }) {
+export async function loader() {
   return {};
 }
 
-// our action function will be launched when the submit button is clicked
-// this will sign in our firebase user and create our session and cookie using user.getIDToken()
 export let action = async ({ request }) => {
   let formData = await request.formData();
-
   try {
     return await sessionLogin(request, formData.get("idToken"), "/");
   } catch (error) {
@@ -65,17 +60,10 @@ export let action = async ({ request }) => {
 };
 
 export default function Login() {
-  // to use our actionData error in our form, we need to pull in our action data
   const actionData = useActionData();
   const fetcher = useFetcher();
-
-  // for refs
   const emailRef = useRef(null);
   const passwordRef = useRef(null);
-
-  /**
-   *
-   */
   const signInWithGoogle = async () => {
     await signOut(auth);
     const provider = new GoogleAuthProvider();
@@ -101,8 +89,6 @@ export default function Login() {
         emailRef.current.value,
         passwordRef.current.value
       );
-
-      // if signin was successful then we have a user
       if (authResp.user) {
         const idToken = await auth.currentUser.getIdToken();
         fetcher.submit(
@@ -117,7 +103,7 @@ export default function Login() {
 
   return (
     <div className="ui container" style={{ paddingTop: 40 }}>
-      <h3>Remix Login With Firebase, Email & Google Auth</h3>
+      <h3>Egypt Business Hub</h3>
       <Form method="post" className="ui form centered">
         <div className="field">
           <label htmlFor="email">Email</label>
@@ -136,7 +122,7 @@ export default function Login() {
         <button
           className="ui button"
           name="email-login"
-          onClick={() =>  signInWithEmail()}
+          onClick={() => signInWithEmail()}
           type="button"
         >
           Login With Email
@@ -144,7 +130,7 @@ export default function Login() {
         <button
           className="ui button"
           type="button"
-          onClick={ () =>  signInWithGoogle()}
+          onClick={() => signInWithGoogle()}
         >
           <i className="icon google"></i>
           Login with Google

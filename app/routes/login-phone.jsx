@@ -15,7 +15,6 @@ import {
 import { sessionLogin } from "../fb.sessions.server";
 import { useEffect, useRef, useState } from "react";
 
-//create a stylesheet ref for the auth.css file
 export let links = () => {
   return [];
 };
@@ -45,17 +44,12 @@ export function CatchBoundary() {
   );
 }
 
-// use loader to check for existing session, if found, send the user to the blogs site
-export async function loader({ request }) {
+export async function loader() {
   return {};
 }
 
-// our action function will be launched when the submit button is clicked
-// this will sign in our firebase user and create our session and cookie using user.getIDToken()
 export let action = async ({ request }) => {
   let formData = await request.formData();
-
-
   try {
     return await sessionLogin(request, formData.get("idToken"), "/");
   } catch (error) {
@@ -64,7 +58,6 @@ export let action = async ({ request }) => {
 };
 
 export default function LoginPhone() {
-  // to use our actionData error in our form, we need to pull in our action data
   const actionData = useActionData();
   const fetcher = useFetcher();
   const phoneRef = useRef(null);
@@ -77,8 +70,9 @@ export default function LoginPhone() {
       "sign-in-button",
       {
         size: "invisible",
-        callback: (response) => {
+        callback: () => {
           debugger;
+          //  callback: (response)
           // reCAPTCHA solved, allow signInWithPhoneNumber.
           // onSignInSubmit();
           // need to account for issue with this, ie and error
@@ -88,12 +82,8 @@ export default function LoginPhone() {
     );
   }, []);
 
-  /**
-   * try to login with phone number
-   */
   const login = async () => {
     await signOut(auth);
-    
     signInWithPhoneNumber(
       getAuth(),
       phoneRef.current.value,
@@ -104,7 +94,6 @@ export default function LoginPhone() {
         // user in with confirmationResult.confirm(code).
         window.confirmationResult = _confirmationResult;
         setConfirmationResult(_confirmationResult);
-        // ...
       })
       .catch((error) => {
         debugger;
@@ -112,9 +101,6 @@ export default function LoginPhone() {
       });
   };
 
-  /**
-   *
-   */
   const confirmCode = async () => {
     confirmationResult
       .confirm(confCodeRef?.current.value)
@@ -139,7 +125,8 @@ export default function LoginPhone() {
       <h3>Remix Login With Firebase, Phone Number</h3>
 
       <Form method="post" className="ui form centered">
-        <div name="sign-in-button" id="sign-in-button"></div>
+        {/*<div name="sign-in-button" id="sign-in-button"></div>*/}
+        <div id="sign-in-button"></div>
         {confirmationResult === null ? (
           <>
             <div className="field">
