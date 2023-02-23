@@ -3,25 +3,18 @@ import { createUserWithEmailAndPassword } from "firebase/auth";
 import { Form, useActionData, Link } from "@remix-run/react";
 import { sessionLogin } from "~/fb.sessions.server";
 
-//create a stylesheet ref for the auth.css file
 export let links = () => {
   return [];
 };
-// This will be the same as our Sign In but it will say Register and use createUser instead of signIn
 
 export let action = async ({ request }) => {
   let formData = await request.formData();
   let email = formData.get("email");
   let password = formData.get("password");
-
-  //perform a signout to clear any active sessions
   await auth.signOut();
   try {
-    //setup user data
     await createUserWithEmailAndPassword(auth, email, password);
-
     const idToken = await auth.currentUser.getIdToken();
-
     return await sessionLogin(request, idToken, "/");
   } catch (error) {
     return { error: { message: error?.message } };
